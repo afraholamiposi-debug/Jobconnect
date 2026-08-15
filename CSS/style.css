@@ -1,0 +1,171 @@
+/* General page settings */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #222;
+}
+
+
+/* Navigation */
+
+header {
+    background-color: #ffffff;
+    padding: 20px 60px;
+    border-bottom: 1px solid #ddd;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav h2 {
+    margin: 0;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #222;
+}
+
+
+/* Main sections */
+
+section {
+    padding: 70px 60px;
+}
+
+
+/* Hero section */
+
+#home {
+    text-align: center;
+    background-color: #eaf2ff;
+}
+
+#home h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+#home p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+
+/* Search form */
+
+#home form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#home input {
+    padding: 14px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* Jobs */
+
+#jobs {
+    background-color: #ffffff;
+}
+
+#jobs article {
+    padding: 25px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+
+/* Contact form */
+
+#contact form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    gap: 10px;
+}
+
+#contact input,
+#contact textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#contact textarea {
+    min-height: 150px;
+}
+
+
+/* Footer */
+
+footer {
+    padding: 30px;
+    text-align: center;
+    background-color: #222;
+    color: white;
+}
+/* Featured jobs layout */
+
+#jobs {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#jobs article {
+    background-color: white;
+    padding: 30px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+#jobs article h3 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+#jobs article p {
+    margin: 10px 0;
+}
+
+#jobs article a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+}
