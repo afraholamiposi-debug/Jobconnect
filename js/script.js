@@ -32,7 +32,7 @@ contactForm.addEventListener("submit", async function(event) {
     const message = document.getElementById("message").value;
 
     try {
-        const response = await fetch("http://localhost:3000/contact", {
+        fetch("https://jobconnect-js9k.onrender.com/contact", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
