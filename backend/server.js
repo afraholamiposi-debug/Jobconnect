@@ -1,8 +1,26 @@
 require("dotenv").config();
 
 const express = require("express");
-const transporter = nodemailer.createTransport(...)
 const app = express();
+
+app.use(express.json());
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(204);
+    }
+
+    next();
+});
+
+// Test route
+app.get("/", (req, res) => {
+    res.send("JobConnect backend is working!");
+});
 
 app.use(express.json());
 app.use((req, res, next) => {
