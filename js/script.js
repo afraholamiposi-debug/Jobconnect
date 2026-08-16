@@ -1,27 +1,3 @@
-const searchForm = document.querySelector("#home form");
-
-if (searchForm) {
-
-searchForm.addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const keyword = searchForm.querySelector("input[type='text']").value;
-    const location = searchForm.querySelectorAll("input[type='text']")[1].value;
-
-    if (keyword === "" && location === "") {
-        alert("Please enter a job title or location.");
-        return;
-    }
-
-    alert(
-        "Searching for jobs..." +
-        "\nKeyword: " + keyword +
-        "\nLocation: " + location
-    );
-});
-
-
-
 const contactForm = document.getElementById("contactForm");
 
 contactForm.addEventListener("submit", async function(event) {
@@ -32,7 +8,7 @@ contactForm.addEventListener("submit", async function(event) {
     const message = document.getElementById("message").value;
 
     try {
-        fetch("https://jobconnect-js9k.onrender.com/contact", {
+        const response = await fetch("https://jobconnect-js9k.onrender.com/contact", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -47,11 +23,13 @@ contactForm.addEventListener("submit", async function(event) {
         const data = await response.json();
 
         alert(data.message);
-        contactForm.reset();
+
+        if (response.ok) {
+            contactForm.reset();
+        }
 
     } catch (error) {
         alert("Something went wrong. Please try again.");
         console.error(error);
     }
 });
-}
