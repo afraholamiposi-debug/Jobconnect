@@ -18,10 +18,12 @@ app.use((req, res, next) => {
     next();
 });
 
+// Test route
 app.get("/", (req, res) => {
     res.send("JobConnect backend is working!");
 });
 
+// Contact form
 app.post("/contact", async (req, res) => {
     const { name, email, message } = req.body;
 
@@ -39,7 +41,7 @@ app.post("/contact", async (req, res) => {
             },
             body: JSON.stringify({
                 from: "onboarding@resend.dev",
-                to: process.env.EMAIL_USER,
+                to: "afraholamiposi@gmail.com",
                 subject: `New contact message from ${name}`,
                 text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
             })
@@ -49,6 +51,7 @@ app.post("/contact", async (req, res) => {
 
         if (!response.ok) {
             console.error("Resend error:", data);
+
             return res.status(500).json({
                 message: "There was a problem sending your message."
             });
