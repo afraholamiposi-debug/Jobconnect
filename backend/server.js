@@ -1,11 +1,11 @@
 require("dotenv").config();
 
 const express = require("express");
-const nodemailer = require("nodemailer");
 
 const app = express();
 
 app.use(express.json());
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -16,15 +16,6 @@ app.use((req, res, next) => {
     }
 
     next();
-});
-
-// Email transporter
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
 });
 
 // Test route
@@ -41,25 +32,36 @@ app.post("/contact", async (req, res) => {
     console.log("Email:", email);
     console.log("Message:", message);
 
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER,
-        subject: `New contact message from ${name}`,
-        text: `
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}
-        `
-    };
-
     try {
-        await transporter.sendMail(mailOptions);
+        const response = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                from: "onboarding@resend.dev",
+                to: process.env.EMAIL_USER,
+                subject: `New contact message from ${name}`,
+                text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.error("Resend error:", data);
+            return res.status(500).json({
+                message: "There was a problem sending your message."
+            });
+        }
+
+        console.log("Email sent:", data);
 
         res.json({
             message: "Your message was sent successfully!"
         });
+
     } catch (error) {
         console.error("Email error:", error);
 
@@ -71,9 +73,6 @@ ${message}
 
 const PORT = process.env.PORT || 3000;
 
-const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-});
 });
