@@ -1,8 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
-const nodemailer = require("nodemailer");
-
+const transporter = nodemailer.createTransport(...)
 const app = express();
 
 app.use(express.json());
