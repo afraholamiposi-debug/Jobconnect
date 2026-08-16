@@ -18,12 +18,10 @@ app.use((req, res, next) => {
     next();
 });
 
-// Test route
 app.get("/", (req, res) => {
     res.send("JobConnect backend is working!");
 });
 
-// Contact form
 app.post("/contact", async (req, res) => {
     const { name, email, message } = req.body;
 
