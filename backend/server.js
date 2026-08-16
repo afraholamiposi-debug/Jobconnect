@@ -49,7 +49,6 @@ app.get("/", (req, res) => {
     res.send("JobConnect backend is working!");
 });
 
-// Contact form
 app.post("/contact", async (req, res) => {
     const { name, email, message } = req.body;
 
@@ -58,6 +57,41 @@ app.post("/contact", async (req, res) => {
     console.log("Email:", email);
     console.log("Message:", message);
 
+    try {
+        const response = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                from: "onboarding@resend.dev",
+                to: process.env.EMAIL_USER,
+                subject: `New contact message from ${name}`,
+                text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.error("Resend error:", data);
+            return res.status(500).json({
+                message: "There was a problem sending your message."
+            });
+        }
+
+        res.json({
+            message: "Your message was sent successfully!"
+        });
+
+    } catch (error) {
+        console.error("Email error:", error);
+        res.status(500).json({
+            message: "There was a problem sending your message."
+        });
+    }
+});
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: process.env.EMAIL_USER,
